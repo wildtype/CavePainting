@@ -1,34 +1,20 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>New Post</title>
-  <link rel="stylesheet" href="/style.css" />
-</head>
-<body>
-  <div class="container">
-    <form method=POST action=/save>
-      <div class="row">
-        <div class="col-3-4 pad-right-20">
-          <input type="text" name="post[title]" placeholder="Title" value="<%= $title %>" />
-        </div>
-        <div class="col-1-4">
-          <input type="text" name="post[slug_readonly]" placeholder="Slug" value="<%= $slug %>" disabled/>
-          <input type="hidden" name="post[slug]" value="<%= $slug %>"/>
-        </div>
+<div class="container">
+  <form method=POST action=/update>
+    <div class="row">
+      <div class="col-3-4 pad-right-20">
+        <input type="text" name="post[title]" placeholder="Title" value="<%= $post->title %>" />
       </div>
+      <div class="col-1-4">
+        <input type="text" name="post[slug_readonly]" placeholder="Slug" value="<%= $post->slug %>" disabled/>
+        <input type="hidden" name="post[slug]" value="<%= $post->slug %>"/>
+      </div>
+    </div>
 
-      <div class="row">
-        <textarea name="post[body]" class="newpost__body" placeholder="Content"><%= $body %></textarea>
-      </div>
-      <div class="row">
-        <textarea name="post[summary]" class="newpost__summary" placeholder="Summary"><%= $summary %></textarea>
-      </div>
-      <div class="row">
-        <button class="mrg-right-20">Save</button><button>Publish</button>
-      </div>
-    </form>
-  </div>
-</body>
-</html>
+    <div class="row">
+      <textarea name="post[body]" class="newpost__body" placeholder="Content"><%= $post->body %></textarea>
+    </div>
+    <div class="row">
+      <button class="mrg-right-20">Save</button><button>Publish</button>
+    </div>
+  </form>
+</div>

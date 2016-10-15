@@ -1,0 +1,24 @@
+% use POSIX 'strftime';
+<div class="container container__article">
+  <h3 class="home__title"><em>ya, aku bakal dibaca</em> <small>~max havelaar</small></h3>
+
+  <div class="tulisan">
+    <h2 class="tulisan__title">Arsip tulisan</h2>
+    <ul class="tulisan__list">
+      % my $last_year = "not set";
+      % foreach my $post (@{$posts}) {
+      % my $this_year = strftime("%Y", localtime($post->created_at));
+      % if ($last_year ne $this_year) {
+          <li class="tulisan__list-item tulisan__list-item--year">
+            <h3><%= $this_year %></h3>
+          </li>
+        % $last_year = $this_year;
+      % }
+        <li class="tulisan__list-item">
+          <span class="datetime"><%= strftime("%d %b %Y", localtime($post->created_at)) %> </span>
+          <a href="/<%= $post->slug %>"><%= $post->title %></a>
+        </li>
+      % }
+    </ul>
+  </div>
+</div>

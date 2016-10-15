@@ -1,33 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>New Post</title>
-  <link rel="stylesheet" href="/style.css" />
-</head>
-<body>
-  <div class="container">
-    <form method=POST action=/save>
-      <div class="row">
-        <div class="col-3-4 pad-right-20">
-          <input type="text" name="post[title]" placeholder="Title" />
-        </div>
-        <div class="col-1-4">
-          <input type="text" name="post[slug]" placeholder="Slug" />
-        </div>
+<div class="container">
+  <form method=POST action=/create>
+    <div class="row">
+      <div class="col-3-4 pad-right-20">
+        <input type="text" name="post[title]" class="post__title" placeholder="Title" />
       </div>
+      <div class="col-1-4">
+        <input type="text" name="post[slug]" class="post__slug" placeholder="Slug" />
+      </div>
+    </div>
 
-      <div class="row">
-        <textarea name="post[body]" class="newpost__body" placeholder="Content"></textarea>
-      </div>
-      <div class="row">
-        <textarea name="post[summary]" class="newpost__summary" placeholder="Summary"></textarea>
-      </div>
-      <div class="row">
-        <button class="mrg-right-20">Save</button><button>Publish</button>
-      </div>
-    </form>
-  </div>
-</body>
-</html>
+    <div class="row">
+      <textarea name="post[body]" class="post__body" placeholder="Content"></textarea>
+    </div>
+    <div class="row">
+      <button class="mrg-right-20">Save</button><button>Publish</button>
+    </div>
+  </form>
+</div>

@@ -20,5 +20,5 @@
 #
 guard :shell do
   watch(/^t\/.*\.t/)
-  watch(/app.pl/) { `prove -v` }
+  watch(/app.pl/) { 'prove -l' }
 end
