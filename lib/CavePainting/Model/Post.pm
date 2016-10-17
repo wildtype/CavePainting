@@ -1,4 +1,7 @@
-package CavePainting::Post;
+package CavePainting::Model::Post;
+use strict;
+use warnings;
+
 use Moo;
 use MooX::ClassAttribute;
 use Redis::Fast;
