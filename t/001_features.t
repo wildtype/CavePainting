@@ -19,4 +19,6 @@ $t->get_ok('/', 'Visiting homepage')
 $t->get_ok('/Test slug', 'visiting test post')
   ->content_like(qr/Test body/, 'article body displayed');
 
+$t->get_ok('/new', 'new post page');
+
 done_testing();
