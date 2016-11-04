@@ -3,10 +3,20 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>prehistoric.me | yes, II will be read</title>
-    <link rel="stylesheet" href="/style.css" />
+    <title>Prehistoric.me &mdash; Yes, I will be read</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Domine" rel="stylesheet">
+    <link rel="stylesheet" href="/css/main.css" />
   </head>
   <body class="home">
-  <%= content %>
+    <header>
+      <h1><a href="//prehistoric.me">Prehistoric</a></h1>
+    </header>
+    <hr class="line" />
+    <section id="home__main" class="home__main" name="home__main">
+      <%= content %>
+    </section>
+
+    <footer>
+    </footer>
   </body>
 </html>

@@ -1,0 +1,84 @@
+*{ margin:0; padding:0; }
+
+body {
+  color: #333;
+  font: 16px/1.6 'Open Sans', sans-serif;
+
+  header {
+    text-align: center;
+    padding-top:2em;
+    padding: auto 10%;
+
+    h1 {
+      margin: auto;
+      width:100px;
+      display:block;
+      text-indent: -10000px;
+      line-height: 100px;
+      background: url('/images/tewet.png') no-repeat center;
+      a {
+        display:block;
+      }
+    }
+  }
+}
+
+.post {
+  &__header, &__footer {
+    padding:1em 0;
+    text-align: left;
+  }
+
+  &__title {
+    font-size: 2em;
+    line-height: 1.2;
+  }
+}
+
+p{
+  margin: auto;
+  max-width: 760px;
+  padding-bottom:1em;
+  font-kerning: normal;
+  font-weight: 200;
+}
+p.s{
+  font-size:.99em;
+}
+
+/* section#main {*/
+article {
+  max-width: 760px;
+  margin: auto;
+  /*padding: 0 20px;*/
+}
+a,a:visited{
+  text-decoration:none;
+  color:#005;
+}
+p a{
+  text-decoration:none;
+  border-bottom: 4px solid #ee0;
+  color: #007;
+  margin-bottom: -4px;
+}
+p a:hover{
+  background-color: #e4e4e4;
+}
+a:hover{
+  color:#002;
+  text-decoration: none;
+}
+a:active{
+  border:none;
+}
+footer>span{
+}
+hr.line{
+  margin:2em 0;
+  border:none;
+  border-top:1px solid #eee;
+}
+code{
+  overflow: scroll;
+}

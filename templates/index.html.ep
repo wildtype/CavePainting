@@ -1,21 +1,18 @@
 % use POSIX 'strftime';
-<div class="container container__article">
-  <h3 class="home__title"><em>ya, aku bakal dibaca</em> <small>~max havelaar</small></h3>
 
-  <section class="tulisan">
-    <h2 class="tulisan__title">Tulisan</h2>
-    <ul class="tulisan__list">
-      % foreach my $post (@{$posts}) {
-      <li class="tulisan__list-item"><span class="datetime"><%= strftime("%d %b %Y", localtime($post->created_at)) %></span> <a href="/<%= $post->slug %>"><%= $post->title %></a></li>
-      % }
-    </ul>
-    <p class="tulisan__more"><a href="/archive">Arsip selengkapnya</a></p>
-  </section>
-
-  <section class="ekskavasi">
-    <h2 class="ekskavasi__title">Eksplorasi & ekskavasi</h2>
-    <ul class="ekskavasi__list">
-      <li class="ekskavasi__list-item">File Permission Calculator</li>
-    </ul> 
-  </section>
-</div>
+% foreach my $post (@{$posts}) {
+  <article class="post">
+    <header class="post__header">
+      <h2 class="post__title"><a href="/<%= $post->slug %>"><%= $post->title %></a></h2>
+    </header>
+    <section class="post__content">
+      <%== $post->body_html %>
+    </section>
+    <footer class="post__footer">
+      <span class="post__timestamp">
+        <%= strftime("%d %b %Y", localtime($post->created_at)) %>
+      </span>
+    </footer>
+  </article>
+  <hr class="line" />
+% }

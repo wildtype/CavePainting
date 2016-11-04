@@ -1,0 +1,26 @@
+{
+  "name": "cave_painting",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wildtype/CavePainting.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wildtype/CavePainting/issues"
+  },
+  "homepage": "https://github.com/wildtype/CavePainting#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  },
+  "dependencies": {
+    "del": "^2.2.2",
+    "gulp-sass": "^2.3.2"
+  }
+}
