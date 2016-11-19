@@ -19,6 +19,7 @@
 #   watch(%r{file/path}) { `command(s)` }
 #
 guard :shell do
-  watch(/^t\/.*\.t/)
+  watch(/^t\/.*\.t/) { |f| `prove -lv #{f[0]}` }
   watch(/app.pl/) { 'prove -l' }
+  watch(/Post.pm/) { `prove -l t/002_model_post.t` }
 end

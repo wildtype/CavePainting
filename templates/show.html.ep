@@ -1,11 +1,10 @@
-% use POSIX 'strftime';
 <div class="container container__article">
   <article>
     <header>
       <h1><a href="/<%= $post->slug %>"><%= $post->title %></a></h1>
     </header>
-    <%== $post->body_html %>
+    <%== $post->body %>
   </article>
-  <p><br/>~<%= strftime('%d %b %Y', localtime($post->created_at)) %></p>
+  <p><br/>~<%= $post->created_at %></p>
   <p><br/>kembali ke <a href="/">depan</a> atau baca <a href="/archive">tulisan lainnya</a>
 </div>

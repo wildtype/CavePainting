@@ -4,102 +4,95 @@ use warnings;
 
 use Moo;
 use MooX::ClassAttribute;
-use Redis::Fast;
-use Text::Textile 'textile';
+
+use DBI;
+use POSIX 'strftime';
 
 class_has db => (
-  is => 'rw',
-  default => sub { Redis::Fast->new }
+  is => 'rw'
 );
 
-has title       => (is => 'rw');
-has body        => (is => 'rw');
-has slug        => (is => 'ro');
-has created_at  => (is => 'rw');
-
-sub save {
-  my $self = shift;
-  $self->db->hmset('post:' . $self->slug,
-    'title', $self->title,
-    'body', $self->body
-  );
-
-  $self->db->zadd('post_created_at', $self->created_at, $self->slug);
-  $self->db->zadd('updated_at', time,$self->slug);
-  return $self;
-}
-
-sub update {
-  my $self = shift;
-  my ($params) = @_;
-
-  $self->title($params->{title}) if $params->{title};
-  $self->body($params->{body}) if $params->{body} ;
-  $self->created_at($params->{created_at}) if $params->{created_at};
-
-  return $self;
-}
-
-sub updated {
-  my $self = shift;
-  my $updated = undef;
-  $updated = $self->db->zscore('updated_at', $self->slug);
-  return $updated;
-}
-
-sub body_html {
-  my $self = shift;
-  return textile($self->body);
-}
+has id             => (is => 'ro', writer => '_set_id');
+has title          => (is => 'rw');
+has body           => (is => 'rw');
+has slug           => (is => 'ro', writer => '_set_slug');
+has created_at     => (is => 'ro', writer => '_set_created_at');
+has updated_at     => (is => 'ro', writer => '_set_updated_at');
+has is_persisted   => (is => 'ro', default => 0, writer => '_set_persistence');
 
 sub create {
-  my $class = shift;
-  my ($arg) = @_;
-  $arg->{created_at} //= time;
-  my $obj = $class->new($arg);
+  my $self = shift;
 
-  unless ($class->find($arg->{slug})) {
-    $obj->save;
-    return $obj;
-  }
+  my $time = strftime("%Y-%m-%d %H:%M:%S", gmtime(time));
 
-  return undef;
+  $self->db->do(
+    'INSERT INTO posts (title, body, created_at, updated_at) VALUES (?,?,?,?)', 
+    undef, 
+    $self->title, $self->body, $time, $time
+  ) or die $self->db->errstr;
+
+  $self->_set_id($self->db->sqlite_last_insert_rowid());
+  $self->_set_persistence(1);
+  return $self;
 }
 
 sub find {
-  my ($class, $slug) = @_;
-  my $posted = $class->db->zscore('post_created_at', $slug);
-  my $result = $class->db->hmget('post:'.$slug, 'title', 'body');
+  my ($class, $id_query) = @_;
 
-  return undef if (_is_all_undef(@{$result}));
-
-  my ($title, $body) = @{$result};
-  return $class->new(
-    {
-      slug       =>$slug, 
-      created_at => $posted,
-      title      =>$title, 
-      body       =>$body
-    }
+  my $result = $class->db->selectrow_hashref(
+    'select * from posts where id=?', 
+    undef,
+    $id_query
   );
+
+  return $class->new(
+    id    => $id_query,
+    title => $result->{title},
+    slug  => $result->{slug},
+    body  => $result->{body},
+    created_at  => $result->{created_at},
+    updated_at  => $result->{updated_at},
+    is_persisted => 1
+  ) if $result;
 }
 
-sub find_all {
-  my ($class, $limit) = @_;
-  $limit //= 0;
-  my @result = ();
-  my @slugs = @{$class->db->zrevrange('post_created_at', 0, $limit-1)};
+sub find_by_slug {
+  my ($class, $slug_query) = @_;
 
-  foreach my $slug (@slugs) {
-    my $post = $class->find($slug);
-    push @result, $post;
+  my $result = $class->db->selectrow_hashref(
+    'select * from posts where slug=?', 
+    undef,
+    $slug_query
+  );
+
+  return $class->new(
+    id    => $result->{id},
+    title => $result->{title},
+    slug  => $result->{slug},
+    body  => $result->{body},
+    created_at  => $result->{created_at},
+    updated_at  => $result->{updated_at},
+    is_persisted => 1
+  ) if $result;
+}
+
+sub timeline {
+  my ($class) = @_;
+  my @results;
+
+  my @posts = $class->db->selectall_array('select * from posts order by created_at desc');
+  foreach my $post (@posts) {
+    push @results, $class->new(
+      id         => $post->[0],
+      title      => $post->[1],
+      slug       => $post->[2],
+      body       => $post->[3],
+      created_at => $post->[4],
+      updated_at => $post->[5]
+    );
   }
 
-  return @result;
-}
-
-sub _is_all_undef {
-  return !(scalar grep defined, @_);
+  return @results;
 }
 
 1;

@@ -3,14 +3,14 @@ use Mojo::Base 'Mojolicious::Controller';
 
 sub index {
   my $c = shift;
-  my @posts = $c->Post->find_all;
+  my @posts = $c->Post->timeline;
   $c->stash({posts => \@posts});
   $c->render(template => 'index');
 }
 
 sub archive {
   my $c = shift;
-  my @posts = $c->Post->find_all;
+  my @posts = $c->Post->timeline;
   $c->stash({posts => \@posts});
   $c->render(template => 'archive');
 }
@@ -37,7 +37,7 @@ sub show {
   my $c = shift;
   my $slug = $c->param('slug');
 
-  my $post = $c->Post->find($slug);
+  my $post = $c->Post->find_by_slug($slug);
   return $c->render(text => '404', status => 404) unless $post;
 
   $c->stash({post => $post});
