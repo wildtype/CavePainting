@@ -17,7 +17,7 @@ sub archive {
 
 sub create {
   my $c  = shift;
-  my $post = $c->Post->create(_post_params($c));
+  my $post = $c->Post->new(_post_params($c))->create;
 
   if ($post) {
     $c->render(text => 'post created: <a href="/'.$post->slug.'">'.$post->title.'</a>');

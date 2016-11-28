@@ -5,18 +5,18 @@
 body {
   color: #333;
   font: 16px/1.6 'Open Sans', sans-serif; }
-  body header {
+  body > header {
     text-align: center;
     padding-top: 2em;
     padding: auto 10%; }
-    body header h1 {
+    body > header h1 {
       margin: auto;
       width: 100px;
       display: block;
       text-indent: -10000px;
       line-height: 100px;
       background: url("/images/tewet.png") no-repeat center; }
-      body header h1 a {
+      body > header h1 a {
         display: block; }
 
 .post__header, .post__footer {

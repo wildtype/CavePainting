@@ -2,6 +2,7 @@ package CavePainting;
 use Mojo::Base 'Mojolicious';
 use CavePainting::Model::Post;
 use FindBin;
+use Pry;
 
 has dbconfig => sub {
   my $app = shift;
@@ -12,10 +13,7 @@ sub startup {
   my $self = shift;
   my $r    = $self->routes;
 
-  my $env      = $ENV{CAVEPAINTING_ENV} || 'production';
-  my $database = $self->plugin('Config', file => 'config/db.conf')->{$env};
-
-  $self->plugin('database', dsn => 'dbi:SQLite:dbname=' . $database);
+  $self->plugin('database', dsn => $self->dsn);
   $self->helper(Post => sub { state $Post = 'CavePainting::Model::Post'; });
   $self->Post->db($self->db);
 

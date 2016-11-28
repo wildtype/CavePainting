@@ -4,7 +4,7 @@ body {
   color: #333;
   font: 16px/1.6 'Open Sans', sans-serif;
 
-  header {
+  &>header {
     text-align: center;
     padding-top:2em;
     padding: auto 10%;

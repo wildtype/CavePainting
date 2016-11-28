@@ -22,13 +22,12 @@ has is_persisted   => (is => 'ro', default => 0, writer => '_set_persistence');
 
 sub create {
   my $self = shift;
-
   my $time = strftime("%Y-%m-%d %H:%M:%S", gmtime(time));
 
   $self->db->do(
-    'INSERT INTO posts (title, body, created_at, updated_at) VALUES (?,?,?,?)', 
-    undef, 
-    $self->title, $self->body, $time, $time
+    'INSERT INTO posts (title, slug, body, created_at, updated_at) VALUES (?,?,?,?,?)',
+    undef,
+    $self->title, $self->slug, $self->body, $time, $time
   ) or die $self->db->errstr;
 
   $self->_set_id($self->db->sqlite_last_insert_rowid());
