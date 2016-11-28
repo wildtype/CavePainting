@@ -2,7 +2,6 @@ package CavePainting;
 use Mojo::Base 'Mojolicious';
 use CavePainting::Model::Post;
 use FindBin;
-use Pry;
 
 has dbconfig => sub {
   my $app = shift;

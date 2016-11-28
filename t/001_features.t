@@ -1,7 +1,7 @@
 use Test::More;
 use Test::Mojo;
 use POSIX 'strftime';
-use Path::Tiny 'path';
+use Mojo::Util 'slurp';
 
 use FindBin;
 use lib "$FindBin::Bin/../lib";
@@ -11,8 +11,8 @@ my $time_created = strftime("%Y-%m-%d %H:%M:%S", gmtime);
 
 my $conf = do "$FindBin::Bin/../config/db.conf";
 my $dbh = DBI->connect('DBI:SQLite:dbname=' . $conf->{test}, '', '');
-$dbh->do(path("$FindBin::Bin/../db/001_create_table_posts.down.sql")->slurp);
-$dbh->do(path("$FindBin::Bin/../db/001_create_table_posts.up.sql")->slurp);
+$dbh->do(slurp "$FindBin::Bin/../db/001_create_table_posts.down.sql");
+$dbh->do(slurp "$FindBin::Bin/../db/001_create_table_posts.up.sql");
 Post->db($dbh);
 
 

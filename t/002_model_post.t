@@ -1,7 +1,6 @@
 use DBI;
-use Data::Dumper;
 use FindBin;
-use Path::Tiny 'path';
+use Mojo::Util 'slurp';
 use POSIX 'strftime';
 use Test::Spec;
 use Test::Time;
@@ -18,8 +17,8 @@ describe "CavePainting::Model::Post" => sub {
 
   before all => sub {
     $dbh = DBI->connect('DBI:SQLite:dbname=' . $conf->{test}, '', '');
-    $dbh->do(path("$FindBin::Bin/../db/001_create_table_posts.down.sql")->slurp);
-    $dbh->do(path("$FindBin::Bin/../db/001_create_table_posts.up.sql")->slurp);
+    $dbh->do(slurp "$FindBin::Bin/../db/001_create_table_posts.down.sql");
+    $dbh->do(slurp "$FindBin::Bin/../db/001_create_table_posts.up.sql");
     Post->db($dbh);
 
     $post = Post->new(
