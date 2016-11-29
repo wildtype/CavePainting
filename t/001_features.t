@@ -35,4 +35,12 @@ $t->get_ok('/Testslug', 'visiting test post')
 
 $t->get_ok('/new', 'new post page');
 
+$t->post_ok('/create' => form => { "post[title]" => "judul", "post[slug]" => "newslug", "post[body]" => "content whatever" }, 'can create post')
+  ->status_is(200)
+  ->content_like(qr/post created: .*?judul/);
+
+$t->get_ok('/newslug', 'visit recently created post')
+  ->status_is(200)
+  ->content_like(qr/content whatever/);
+
 done_testing();
