@@ -12,7 +12,7 @@ sub startup {
   my $self = shift;
   my $r    = $self->routes;
 
-  $self->plugin('database', dsn => $self->dsn);
+  $self->helper(db => sub { DBI->connect($self->dsn, '', ''); });
   $self->helper(Post => sub { state $Post = 'CavePainting::Model::Post'; });
   $self->Post->db($self->db);
 

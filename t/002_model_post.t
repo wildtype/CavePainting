@@ -29,7 +29,7 @@ describe "CavePainting::Model::Post" => sub {
   };
 
   after all => sub {
-    $dbh->do(path("$FindBin::Bin/../db/001_create_table_posts.down.sql")->slurp);
+    $dbh->do(slurp "$FindBin::Bin/../db/001_create_table_posts.down.sql");
   };
 
   describe "default values" => sub {
