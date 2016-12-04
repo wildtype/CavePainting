@@ -6,3 +6,4 @@ requires 'Moo';
 requires 'MooX::ClassAttribute';
 requires 'Test::Spec';
 requires 'Test::Time';
+requires 'Text::Markdown';

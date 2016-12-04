@@ -7,6 +7,7 @@ use MooX::ClassAttribute;
 
 use DBI;
 use POSIX 'strftime';
+use Text::Markdown 'markdown';
 
 class_has db => (
   is => 'rw'
@@ -92,6 +93,11 @@ sub timeline {
   }
 
   return @results;
+}
+
+sub parsed_body {
+  my $self = shift;
+  return markdown($self->body);
 }
 
 1;

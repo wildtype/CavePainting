@@ -255,6 +255,13 @@ describe "CavePainting::Model::Post" => sub {
       $dbh->do('delete from posts');
     };
   };
+
+  describe "#parsed_body" => sub {
+    it "returns markdown parsed body" => sub {
+      my $post = Post->new(body => '*bold*');
+      is($post->parsed_body =~ s/^\s+|\s+$//gr, '<p><em>bold</em></p>');
+    };
+  };
 };
 
 runtests unless caller;

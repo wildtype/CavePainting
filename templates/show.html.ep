@@ -3,7 +3,7 @@
     <header>
       <h1><a href="/<%= $post->slug %>"><%= $post->title %></a></h1>
     </header>
-    <%== $post->body %>
+    <%== $post->parsed_body %>
   </article>
   <p><br/>~<%= $post->created_at %></p>
   <p><br/>kembali ke <a href="/">depan</a> atau baca <a href="/archive">tulisan lainnya</a>
